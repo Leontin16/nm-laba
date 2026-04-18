@@ -2,6 +2,7 @@
 #include <vector>
 
 
+// Структура для хранения коэффициентов 3-диагональной системы
 struct TridiagonalSystem {
     std::vector<double> lower; // нижнаяя диагональ
     std::vector<double> main; // главная диагональ
