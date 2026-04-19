@@ -1,4 +1,4 @@
-name: SukaTest
+name: Super Build & Test
 
 on:
   push:
@@ -7,9 +7,8 @@ on:
     branches: [ main, master ]
 
 jobs:
-  build-and-check-fuck-that-shit:
+  unit-tests:
     runs-on: windows-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -24,7 +23,7 @@ jobs:
             mingw-w64-x86_64-cmake
             mingw-w64-x86_64-make
 
-      - name: Clean previous build (if any)
+      - name: Clean previous build
         shell: msys2 {0}
         run: |
           cd backend/algorithm
@@ -47,6 +46,40 @@ jobs:
         run: |
           cd backend/algorithm/build
           ./algorithm_test.exe
+
+  accuracy-check:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup MSYS2 (MinGW-w64)
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          update: true
+          install: >-
+            mingw-w64-x86_64-gcc
+            mingw-w64-x86_64-cmake
+            mingw-w64-x86_64-make
+
+      - name: Clean previous build
+        shell: msys2 {0}
+        run: |
+          cd backend/algorithm
+          rm -rf build
+
+      - name: Configure CMake
+        shell: msys2 {0}
+        run: |
+          cd backend/algorithm
+          cmake -B build -G "MinGW Makefiles"
+
+      - name: Build project
+        shell: msys2 {0}
+        run: |
+          cd backend/algorithm
+          cmake --build build
 
       - name: Generate tables (accuracy_engine_simple)
         shell: msys2 {0}
