@@ -1,0 +1,3 @@
+F:\cmakkke\bin\cmake.exe -E rm -f CMakeFiles\algorithm_test.dir/objects.a
+C:\ProgramData\chocolatey\bin\ar.exe qc CMakeFiles\algorithm_test.dir/objects.a @CMakeFiles\algorithm_test.dir\objects1.rsp
+C:\ProgramData\chocolatey\bin\c++.exe -Wl,--whole-archive CMakeFiles\algorithm_test.dir/objects.a -Wl,--no-whole-archive -o algorithm_test.exe -Wl,--out-implib,libalgorithm_test.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\algorithm_test.dir\linkLibs.rsp

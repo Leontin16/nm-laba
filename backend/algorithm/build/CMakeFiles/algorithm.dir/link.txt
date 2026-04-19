@@ -1,0 +1,2 @@
+C:\ProgramData\chocolatey\bin\ar.exe qc libalgorithm.a CMakeFiles/algorithm.dir/algorithm.cpp.obj
+C:\ProgramData\chocolatey\bin\ranlib.exe libalgorithm.a

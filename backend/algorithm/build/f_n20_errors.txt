@@ -1,0 +1,4 @@
+=== ERROR SUMMARY ===
+max |F - S|      = 8.17664e-05 at x = 0.02
+max |F'- S'|     = 0.00963053 at x = 0
+max |F''- S''|   = 0.666667 at x = 0
