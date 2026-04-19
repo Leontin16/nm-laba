@@ -7,7 +7,7 @@ on:
     branches: [ main, master ]
 
 jobs:
-  build-and-check:
+  ZalupaBuild-Check-Test:
     runs-on: windows-latest
 
     steps:
@@ -26,24 +26,32 @@ jobs:
 
       - name: Configure CMake
         shell: msys2 {0}
-        run: cmake -B build -G "MinGW Makefiles"
+        run: |
+          cd backend/algorithm
+          cmake -B build -G "MinGW Makefiles"
 
       - name: Build project
         shell: msys2 {0}
-        run: cmake --build build
+        run: |
+          cd backend/algorithm
+          cmake --build build
 
       - name: Run unit tests
         shell: msys2 {0}
-        run: ./build/algorithm_test.exe
+        run: |
+          cd backend/algorithm/build
+          ./algorithm_test.exe
 
       - name: Generate tables (accuracy_engine_simple)
         shell: msys2 {0}
-        run: ./build/accuracy_engine_simple.exe
+        run: |
+          cd backend/algorithm/build
+          ./accuracy_engine_simple.exe
 
       - name: Verify output files exist and are non-empty
         shell: msys2 {0}
         run: |
-          cd build
+          cd backend/algorithm/build
           files=(
             "f_n20_table1.csv"
             "f_n20_table2.csv"
@@ -68,7 +76,7 @@ jobs:
       - name: Check phi(x) error threshold
         shell: msys2 {0}
         run: |
-          cd build
+          cd backend/algorithm/build
           max_err=$(grep "max |F - S|" phi_n4_errors.txt | awk '{print $NF}')
           threshold=1e-12
           if (( $(echo "$max_err > $threshold" | bc -l) )); then
