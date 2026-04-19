@@ -7,7 +7,7 @@ on:
     branches: [ main, master ]
 
 jobs:
-  ZalupaBuild-Check-Test:
+  build-and-check-fuck-that-shit:
     runs-on: windows-latest
 
     steps:
@@ -23,6 +23,12 @@ jobs:
             mingw-w64-x86_64-gcc
             mingw-w64-x86_64-cmake
             mingw-w64-x86_64-make
+
+      - name: Clean previous build (if any)
+        shell: msys2 {0}
+        run: |
+          cd backend/algorithm
+          rm -rf build
 
       - name: Configure CMake
         shell: msys2 {0}
