@@ -1,4 +1,4 @@
-name: Build and Test
+name: SukaTest
 
 on:
   push:
@@ -14,25 +14,34 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup MinGW
-        uses: egor-tensin/setup-mingw@v2
+      - name: Setup MSYS2 (MinGW-w64)
+        uses: msys2/setup-msys2@v2
         with:
-          platform: x64
+          msystem: MINGW64
+          update: true
+          install: >-
+            mingw-w64-x86_64-gcc
+            mingw-w64-x86_64-cmake
+            mingw-w64-x86_64-make
 
       - name: Configure CMake
+        shell: msys2 {0}
         run: cmake -B build -G "MinGW Makefiles"
 
       - name: Build project
+        shell: msys2 {0}
         run: cmake --build build
 
       - name: Run unit tests
+        shell: msys2 {0}
         run: ./build/algorithm_test.exe
 
       - name: Generate tables (accuracy_engine_simple)
+        shell: msys2 {0}
         run: ./build/accuracy_engine_simple.exe
 
       - name: Verify output files exist and are non-empty
-        shell: bash
+        shell: msys2 {0}
         run: |
           cd build
           files=(
@@ -57,7 +66,7 @@ jobs:
           echo "All output files present and non-empty."
 
       - name: Check phi(x) error threshold
-        shell: bash
+        shell: msys2 {0}
         run: |
           cd build
           max_err=$(grep "max |F - S|" phi_n4_errors.txt | awk '{print $NF}')
