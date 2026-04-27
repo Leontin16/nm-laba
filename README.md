@@ -19,7 +19,7 @@
    
 4. Для запуска и генерации таблиц (в папку билда):
    ```powershell
-   ./algorithm_test.exe
+   ./accuracy_engine_simple.exe
 
 5. Для запуска тестов:
    ```powershell
